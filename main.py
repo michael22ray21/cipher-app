@@ -2,43 +2,38 @@ import inquirer
 import HandleFiles as hf
 
 if __name__ == "__main__":
-    cipher_question = [
-        inquirer.List(
-            name="cipher_type",
-            message="Choose cipher type",
-            choices=[
-                "Vigenere Cipher",
-                "Full Vigenere Cipher",
-                "Auto-key Vigenere Cipher",
-                "Extended Vigenere Cipher",
-                "Playfair Cipher",
-                "Super Encryption",
-                "Affine Cipher",
-                "Hill Cipher",
-                "Enigma Cipher"
-            ],
-        )
-    ]
+    cipher_answer = inquirer.list_input(
+        "Choose cipher type",
+        choices=[
+            "Vigenere Cipher",
+            "Full Vigenere Cipher",
+            "Auto-key Vigenere Cipher",
+            "Extended Vigenere Cipher",
+            "Playfair Cipher",
+            "Super Encryption",
+            "Affine Cipher",
+            "Hill Cipher",
+            "Enigma Cipher"
+        ],
+    )
 
-    cipher_answer = inquirer.prompt(cipher_question)
-
-    if cipher_answer['cipher_type'] == "Vigenere Cipher":
+    if cipher_answer == "Vigenere Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Full Vigenere Cipher":
+    elif cipher_answer == "Full Vigenere Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Auto-key Vigenere Cipher":
+    elif cipher_answer == "Auto-key Vigenere Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Extended Vigenere Cipher":
+    elif cipher_answer == "Extended Vigenere Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Playfair Cipher":
+    elif cipher_answer == "Playfair Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Super Cipher":
+    elif cipher_answer == "Super Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Affine Cipher":
+    elif cipher_answer == "Affine Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Hill Cipher":
+    elif cipher_answer == "Hill Cipher":
         raise NotImplementedError
-    elif cipher_answer['cipher_type'] == "Enigma Cipher":
+    elif cipher_answer == "Enigma Cipher":
         raise NotImplementedError
     else:
         raise NotImplementedError
