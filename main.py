@@ -6,6 +6,7 @@ from PlayfairCipher import PlayfairCipher
 from HillCipher import HillCipher
 from SuperCipher import SuperCipher
 from AffineCipher import AffineCipher
+from AutoKeyVignereCipher import AutoKeyVignereCipher
 
 def vigenere_cipher_run(mode: str):
     key = simple_key_read_prompt()
@@ -277,6 +278,25 @@ def affine_cipher_run(mode: str):
 
         plaintext_write_prompt(plaintext)
 
+def autokey_vigenere_cipher_run(mode: str):
+    key = simple_key_read_prompt()
+
+    cipher = AutoKeyVignereCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        plaintext_write_prompt(plaintext)
+
 def plaintext_read_prompt() -> str:
         # Ask for plaintext source
         plaintext_source = inquirer.list_input(
@@ -472,7 +492,7 @@ if __name__ == "__main__":
     elif cipher_answer['cipher_type'] == "Full Vigenere Cipher":
         raise NotImplementedError
     elif cipher_answer['cipher_type'] == "Auto-key Vigenere Cipher":
-        raise NotImplementedError
+        autokey_vigenere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Extended Vigenere Cipher":
         extended_vignere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Playfair Cipher":
