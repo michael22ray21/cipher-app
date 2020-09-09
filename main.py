@@ -5,6 +5,7 @@ from ExtendedVigenereCipher import ExtendedVigenereCipher
 from PlayfairCipher import PlayfairCipher
 from HillCipher import HillCipher
 from SuperCipher import SuperCipher
+from AffineCipher import AffineCipher
 
 def vigenere_cipher_run(mode: str):
     key = simple_key_read_prompt()
@@ -257,6 +258,25 @@ def super_cipher_run(mode: str):
 
         plaintext_write_prompt(plaintext)
 
+def affine_cipher_run(mode: str):
+    key = [int(x) for x in simple_key_read_prompt().split()]
+
+    cipher = AffineCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        plaintext_write_prompt(plaintext)
+
 def plaintext_read_prompt() -> str:
         # Ask for plaintext source
         plaintext_source = inquirer.list_input(
@@ -460,7 +480,7 @@ if __name__ == "__main__":
     elif cipher_answer['cipher_type'] == "Super Cipher":
         super_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Affine Cipher":
-        raise NotImplementedError
+        affine_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Hill Cipher":
         hillCipher_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Enigma Cipher":
