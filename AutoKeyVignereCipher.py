@@ -72,7 +72,8 @@ class AutoKeyVignereCipher(CipherInterface.StringCipher):
         Overrides StringCipher.encrypt()
         """
         self.key += plaintext.upper()
-        return VignereCipher.encrypt(plaintext, self.key)
+        cipher = VignereCipher(self.key)
+        return cipher.encrypt(plaintext)
 
     def decrypt(self, ciphertext: str) -> str:
         """
