@@ -1,11 +1,11 @@
 import unittest
-from ExtendedVignereCipher import ExtendedVignereCipher
+from ExtendedVigenereCipher import ExtendedVigenereCipher
 
-class ExtendedVignereCipherTestCase(unittest.TestCase):
+class ExtendedVigenereCipherTestCase(unittest.TestCase):
     def test_encrypt(self):
         key_binary = bytearray([1, 2, 3, 4, 5])
 
-        cipher = ExtendedVignereCipher(key_binary)
+        cipher = ExtendedVigenereCipher(key_binary)
 
         plain_binary = bytearray([1, 2, 3, 4, 5])
 
@@ -22,7 +22,7 @@ class ExtendedVignereCipherTestCase(unittest.TestCase):
     def test_decrypt(self):
         key_binary = bytearray([1, 2, 3, 4, 5])
 
-        cipher = ExtendedVignereCipher(key_binary)
+        cipher = ExtendedVigenereCipher(key_binary)
 
         cipher_binary = bytearray([2, 4, 6, 8, 10])
 

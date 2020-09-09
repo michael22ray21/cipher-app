@@ -2,8 +2,9 @@ import CipherInterface
 
 BYTE_MAX = 256
 
-class ExtendedVignereCipher(CipherInterface.BinaryCipher):
-    """Extended Vignere cipher description here"""
+class ExtendedVigenereCipher(CipherInterface.BinaryCipher):
+    """Extended Vignere cipher works by shifting chunks of characters in plaintext
+    by the key's characters decimal representation"""
 
     def __init__(self, key_binary: bytearray):
         self.key = key_binary

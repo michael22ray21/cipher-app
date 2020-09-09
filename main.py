@@ -1,11 +1,11 @@
 import inquirer
 import HandleFiles as hf
-from ExtendedVignereCipher import ExtendedVignereCipher
+from ExtendedVigenereCipher import ExtendedVigenereCipher
 
 def extended_vignere_cipher_run(mode: str):
     key = extended_vignere_cipher_get_key()
 
-    cipher = ExtendedVignereCipher(key)
+    cipher = ExtendedVigenereCipher(key)
 
     if mode == "Encrypt":
         extended_vignere_cipher_encrypt(cipher)
@@ -43,7 +43,7 @@ def extended_vignere_cipher_get_key() -> bytearray:
     else:
         raise NotImplementedError
 
-def extended_vignere_cipher_encrypt(cipher: ExtendedVignereCipher):
+def extended_vignere_cipher_encrypt(cipher: ExtendedVigenereCipher):
         # Ask for plain binary and where to store the result
         question = [
             inquirer.Path("source",
@@ -64,7 +64,7 @@ def extended_vignere_cipher_encrypt(cipher: ExtendedVignereCipher):
 
         hf.write_file_from_bytearray(encrypted_data, answer['destination'])
 
-def extended_vignere_cipher_decrypt(cipher: ExtendedVignereCipher):
+def extended_vignere_cipher_decrypt(cipher: ExtendedVigenereCipher):
         # Ask for encrypted binary and where to store the result
         question = [
             inquirer.Path("source",
