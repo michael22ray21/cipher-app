@@ -477,7 +477,7 @@ if __name__ == "__main__":
         extended_vignere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Playfair Cipher":
         playfair_cipher_run(cipher_answer['cipher_mode'])
-    elif cipher_answer['cipher_type'] == "Super Cipher":
+    elif cipher_answer['cipher_type'] == "Super Encryption":
         super_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Affine Cipher":
         affine_cipher_run(cipher_answer['cipher_mode'])
