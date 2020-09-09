@@ -4,6 +4,7 @@ from VignereCipher import VignereCipher
 from ExtendedVigenereCipher import ExtendedVigenereCipher
 from PlayfairCipher import PlayfairCipher
 from HillCipher import HillCipher
+from SuperCipher import SuperCipher
 
 def vigenere_cipher_run(mode: str):
     key = simple_key_read_prompt()
@@ -237,6 +238,25 @@ def hillCipher_cipher_get_key() -> str:
     else:
         raise NotImplementedError
 
+def super_cipher_run(mode: str):
+    key = simple_key_read_prompt()
+
+    cipher = SuperCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        plaintext_write_prompt(plaintext)
+
 def plaintext_read_prompt() -> str:
         # Ask for plaintext source
         plaintext_source = inquirer.list_input(
@@ -438,7 +458,7 @@ if __name__ == "__main__":
     elif cipher_answer['cipher_type'] == "Playfair Cipher":
         playfair_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Super Cipher":
-        raise NotImplementedError
+        super_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Affine Cipher":
         raise NotImplementedError
     elif cipher_answer['cipher_type'] == "Hill Cipher":
