@@ -211,7 +211,7 @@ def playfair_cipher_ciphertext_read_prompt() -> str:
         elif ciphertext_source == "File":
             question = [
                 inquirer.Path("file_path",
-                                message="path to plaintext file",
+                                message="path to ciphertext file",
                                 path_type=inquirer.Path.FILE,
                                 ),
             ]
@@ -239,7 +239,7 @@ def playfair_cipher_plaintext_write_prompt(plaintext: str):
     elif destination == "File":
         question = [
             inquirer.Path("file_path",
-                            message="path to ciphertext file",
+                            message="path to plaintext file",
                             path_type=inquirer.Path.FILE,
                             ),
         ]
