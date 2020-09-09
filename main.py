@@ -1,8 +1,28 @@
 import inquirer
 import HandleFiles as hf
+from VignereCipher import VignereCipher
 from ExtendedVigenereCipher import ExtendedVigenereCipher
 from PlayfairCipher import PlayfairCipher
 from HillCipher import HillCipher
+
+def vigenere_cipher_run(mode: str):
+    key = simple_key_read_prompt()
+
+    cipher = VignereCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        plaintext_write_prompt(plaintext)
 
 def extended_vignere_cipher_run(mode: str):
     key = extended_vignere_cipher_get_key()
@@ -348,6 +368,36 @@ def plaintext_write_prompt(plaintext: str):
     else:
         raise NotImplementedError
 
+def simple_key_read_prompt() -> str:
+    # Set up cipher key
+    key_source = inquirer.list_input(
+        "Choose key source",
+        choices=[
+            "Manual Input",
+            "File"
+        ]
+    )
+
+    if key_source == "Manual Input":
+        key_string = inquirer.text(message="key")
+
+        return key_string
+
+    elif key_source == "File":
+        question = [
+            inquirer.Path("file_path",
+                            message="path to key file",
+                            path_type=inquirer.Path.FILE,
+                            ),
+        ]
+
+        key_file_path = inquirer.prompt(question)
+
+        return hf.read_file_as_string_single_stripped(key_file_path['file_path'])
+
+    else:
+        raise NotImplementedError
+
 if __name__ == "__main__":
     cipher_question = [
         inquirer.List(
@@ -378,7 +428,7 @@ if __name__ == "__main__":
     cipher_answer = inquirer.prompt(cipher_question)
 
     if cipher_answer['cipher_type'] == "Vigenere Cipher":
-        raise NotImplementedError
+        vigenere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Full Vigenere Cipher":
         raise NotImplementedError
     elif cipher_answer['cipher_type'] == "Auto-key Vigenere Cipher":
