@@ -7,11 +7,31 @@ from HillCipher import HillCipher
 from SuperCipher import SuperCipher
 from AffineCipher import AffineCipher
 from AutoKeyVignereCipher import AutoKeyVignereCipher
+from FullVignereCipher import FullVignereCipher
 
 def vigenere_cipher_run(mode: str):
     key = simple_key_read_prompt()
 
     cipher = VignereCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        plaintext_write_prompt(plaintext)
+
+def full_vigenere_cipher_run(mode: str):
+    key = simple_key_read_prompt()
+
+    cipher = FullVignereCipher(key)
 
     if mode == "Encrypt":
         plaintext = plaintext_read_prompt()
@@ -490,7 +510,7 @@ if __name__ == "__main__":
     if cipher_answer['cipher_type'] == "Vigenere Cipher":
         vigenere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Full Vigenere Cipher":
-        raise NotImplementedError
+        full_vigenere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Auto-key Vigenere Cipher":
         autokey_vigenere_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Extended Vigenere Cipher":
