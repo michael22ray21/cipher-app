@@ -176,6 +176,21 @@ def playfair_cipher_ciphertext_write_prompt(ciphertext: str):
         ]
     )
 
+    group_by_five = inquirer.confirm(
+        "Group result by 5 characters?",
+        default=False
+    )
+
+    if group_by_five:
+        temporary_ciphertext = ""
+
+        for idx, elem in enumerate(ciphertext):
+            temporary_ciphertext += elem
+            if idx % 5 == 4:
+                temporary_ciphertext += " "
+
+        ciphertext = temporary_ciphertext
+
     if destination == "Terminal Output":
         print(ciphertext)
 
@@ -372,6 +387,21 @@ def hillCipher_cipher_ciphertext_write_prompt(ciphertext: str):
             "File"
         ]
     )
+
+    group_by_five = inquirer.confirm(
+        "Group result by 5 characters?",
+        default=False
+    )
+
+    if group_by_five:
+        temporary_ciphertext = ""
+
+        for idx, elem in enumerate(ciphertext):
+            temporary_ciphertext += elem
+            if idx % 5 == 4:
+                temporary_ciphertext += " "
+
+        ciphertext = temporary_ciphertext
 
     if destination == "Terminal Output":
         print(ciphertext)
