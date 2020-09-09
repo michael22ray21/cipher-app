@@ -1,6 +1,7 @@
 import inquirer
 import HandleFiles as hf
 from ExtendedVigenereCipher import ExtendedVigenereCipher
+from HillCipher import HillCipher
 
 def extended_vignere_cipher_run(mode: str):
     key = extended_vignere_cipher_get_key()
@@ -85,6 +86,203 @@ def extended_vignere_cipher_decrypt(cipher: ExtendedVigenereCipher):
 
         hf.write_file_from_bytearray(plain_data, answer['destination'])
 
+def hillCipher_cipher_run(mode: str):
+    key = hillCipher_cipher_get_key()
+
+    cipher = HillCipher(key)
+
+    if mode == "Encrypt":
+        plaintext = hillCipher_cipher_plaintext_read_prompt()
+
+        ciphertext = cipher.encrypt(plaintext)
+
+        hillCipher_cipher_ciphertext_write_prompt(ciphertext)
+
+    elif mode == "Decrypt":
+        ciphertext = hillCipher_cipher_ciphertext_read_prompt()
+
+        plaintext = cipher.decrypt(ciphertext)
+
+        hillCipher_cipher_plaintext_write_prompt(plaintext)
+
+def hillCipher_cipher_get_key() -> str:
+    # Set up cipher key
+    key_source = inquirer.list_input(
+        "Choose key source",
+        choices=[
+            "Manual Input",
+            "File"
+        ]
+    )
+
+    if key_source == "Manual Input":
+        key_size = int(inquirer.text(message="key size (N x N)"))
+
+        key_string = inquirer.text(message="key")
+
+        key_list = [int(x) for x in key_string.split()]
+
+        if len(key_list) != key_size ** 2:
+            raise Exception("key length not valid")
+
+        key = []
+
+        for i in range(0, key_size):
+            key_row = []
+            for j in range(0, key_size):
+                key_row.append(key_list[key_size * i + j])
+            key.append(key_row)
+
+        return key
+
+    elif key_source == "File":
+        question = [
+            inquirer.Path("file_path",
+                            message="path to key file",
+                            path_type=inquirer.Path.FILE,
+                            ),
+        ]
+
+        key_file_path = inquirer.prompt(question)
+
+        key_string_list = hf.read_file_as_string_list_stripped(key_file_path['file_path'])
+
+        key_size = int(key_string_list[0])
+
+        key_list = [int(x) for x in key_string_list[1].split()]
+
+        if len(key_list) != key_size ** 2:
+            raise Exception("key length not valid")
+
+        key = []
+
+        for i in range(0, key_size):
+            key_row = []
+            for j in range(0, key_size):
+                key_row.append(key_list[key_size * i + j])
+            key.append(key_row)
+
+        return key
+
+    else:
+        raise NotImplementedError
+
+def hillCipher_cipher_plaintext_read_prompt() -> str:
+        # Ask for plaintext source
+        plaintext_source = inquirer.list_input(
+            "Choose plaintext source",
+            choices=[
+                "Manual Input",
+                "File"
+            ]
+        )
+
+        if plaintext_source == "Manual Input":
+            plaintext_string = inquirer.text(message="plaintext")
+
+            return plaintext_string
+
+        elif plaintext_source == "File":
+            question = [
+                inquirer.Path("file_path",
+                                message="path to plaintext file",
+                                path_type=inquirer.Path.FILE,
+                                ),
+            ]
+
+            plaintext_file_path = inquirer.prompt(question)
+
+            return hf.read_file_as_string_single_stripped(plaintext_file_path['file_path'])
+
+        else:
+            raise NotImplementedError
+
+def hillCipher_cipher_ciphertext_write_prompt(ciphertext: str):
+    # Ask for ciphertext destination
+    destination = inquirer.list_input(
+        "Choose result destination",
+        choices=[
+            "Terminal Output",
+            "File"
+        ]
+    )
+
+    if destination == "Terminal Output":
+        print(ciphertext)
+
+    elif destination == "File":
+        question = [
+            inquirer.Path("file_path",
+                            message="path to ciphertext file",
+                            path_type=inquirer.Path.FILE,
+                            ),
+        ]
+
+        ciphertext_file_path = inquirer.prompt(question)
+
+        hf.write_file_from_string(ciphertext, ciphertext_file_path['file_path'])
+
+    else:
+        raise NotImplementedError
+
+def hillCipher_cipher_ciphertext_read_prompt() -> str:
+        # Ask for ciphertext source
+        ciphertext_source = inquirer.list_input(
+            "Choose ciphertext source",
+            choices=[
+                "Manual Input",
+                "File"
+            ]
+        )
+
+        if ciphertext_source == "Manual Input":
+            ciphertext_string = inquirer.text(message="ciphertext")
+
+            return ciphertext_string
+
+        elif ciphertext_source == "File":
+            question = [
+                inquirer.Path("file_path",
+                                message="path to ciphertext file",
+                                path_type=inquirer.Path.FILE,
+                                ),
+            ]
+
+            ciphertext_file_path = inquirer.prompt(question)
+
+            return hf.read_file_as_string_single_stripped(ciphertext_file_path['file_path'])
+
+        else:
+            raise NotImplementedError
+
+def hillCipher_cipher_plaintext_write_prompt(plaintext: str):
+    # Ask for plaintext destination
+    destination = inquirer.list_input(
+        "Choose result destination",
+        choices=[
+            "Terminal Output",
+            "File"
+        ]
+    )
+
+    if destination == "Terminal Output":
+        print(plaintext)
+
+    elif destination == "File":
+        question = [
+            inquirer.Path("file_path",
+                            message="path to plaintext file",
+                            path_type=inquirer.Path.FILE,
+                            ),
+        ]
+
+        plaintext_file_path = inquirer.prompt(question)
+
+        hf.write_file_from_string(plaintext, plaintext_file_path['file_path'])
+
+    else:
+        raise NotImplementedError
+
 if __name__ == "__main__":
     cipher_question = [
         inquirer.List(
@@ -129,7 +327,7 @@ if __name__ == "__main__":
     elif cipher_answer['cipher_type'] == "Affine Cipher":
         raise NotImplementedError
     elif cipher_answer['cipher_type'] == "Hill Cipher":
-        raise NotImplementedError
+        hillCipher_cipher_run(cipher_answer['cipher_mode'])
     elif cipher_answer['cipher_type'] == "Enigma Cipher":
         raise NotImplementedError
     else:
