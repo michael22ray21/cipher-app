@@ -71,12 +71,12 @@ def IntToChar(num) :
 
 class AffineCipher(CipherInterface.StringCipher):
     """Affine cipher description here"""
-    key: list
 
     def __init__(self, key: list):
+        self.key = []
         if (is_coprime(key[0], 26)) :
-            self.key[0] = key[0]
-            self.key[1] = key[1]
+            self.key.append(key[0])
+            self.key.append(key[1])
         else :
             raise NotImplementedError
 
