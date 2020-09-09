@@ -15,9 +15,17 @@ if __name__ == "__main__":
                 "Super Encryption",
                 "Affine Cipher",
                 "Hill Cipher",
-                "Enigma Cipher"
+                "Enigma Cipher",
             ],
-        )
+        ),
+        inquirer.List(
+            name="cipher_mode",
+            message="Chose cipher mode",
+            choices=[
+                "Encrypt",
+                "Decrypt",
+            ]
+        ),
     ]
 
     cipher_answer = inquirer.prompt(cipher_question)
