@@ -93,18 +93,18 @@ def playfair_cipher_run(mode: str):
     cipher = PlayfairCipher(key)
 
     if mode == "Encrypt":
-        plaintext = playfair_cipher_plaintext_read_prompt()
+        plaintext = plaintext_read_prompt()
 
         ciphertext = cipher.encrypt(plaintext)
 
-        playfair_cipher_ciphertext_write_prompt(ciphertext)
+        ciphertext_write_prompt(ciphertext)
 
     elif mode == "Decrypt":
-        ciphertext = playfair_cipher_ciphertext_read_prompt()
+        ciphertext = ciphertext_read_prompt()
 
         plaintext = cipher.decrypt(ciphertext)
 
-        playfair_cipher_plaintext_write_prompt(plaintext)
+        plaintext_write_prompt(plaintext)
 
 def playfair_cipher_get_key() -> str:
     # Set up cipher key
@@ -136,155 +136,24 @@ def playfair_cipher_get_key() -> str:
     else:
         raise NotImplementedError
 
-def playfair_cipher_plaintext_read_prompt() -> str:
-        # Ask for plaintext source
-        plaintext_source = inquirer.list_input(
-            "Choose plaintext source",
-            choices=[
-                "Manual Input",
-                "File"
-            ]
-        )
-
-        if plaintext_source == "Manual Input":
-            plaintext_string = inquirer.text(message="plaintext")
-
-            return plaintext_string
-
-        elif plaintext_source == "File":
-            question = [
-                inquirer.Path("file_path",
-                                message="path to plaintext file",
-                                path_type=inquirer.Path.FILE,
-                                ),
-            ]
-
-            plaintext_file_path = inquirer.prompt(question)
-
-            return hf.read_file_as_string_single_stripped(plaintext_file_path['file_path'])
-
-        else:
-            raise NotImplementedError
-
-def playfair_cipher_ciphertext_write_prompt(ciphertext: str):
-    # Ask for ciphertext destination
-    destination = inquirer.list_input(
-        "Choose result destination",
-        choices=[
-            "Terminal Output",
-            "File"
-        ]
-    )
-
-    group_by_five = inquirer.confirm(
-        "Group result by 5 characters?",
-        default=False
-    )
-
-    if group_by_five:
-        temporary_ciphertext = ""
-
-        for idx, elem in enumerate(ciphertext):
-            temporary_ciphertext += elem
-            if idx % 5 == 4:
-                temporary_ciphertext += " "
-
-        ciphertext = temporary_ciphertext
-
-    if destination == "Terminal Output":
-        print(ciphertext)
-
-    elif destination == "File":
-        question = [
-            inquirer.Path("file_path",
-                            message="path to ciphertext file",
-                            path_type=inquirer.Path.FILE,
-                            ),
-        ]
-
-        ciphertext_file_path = inquirer.prompt(question)
-
-        hf.write_file_from_string(ciphertext, ciphertext_file_path['file_path'])
-
-    else:
-        raise NotImplementedError
-
-def playfair_cipher_ciphertext_read_prompt() -> str:
-        # Ask for ciphertext source
-        ciphertext_source = inquirer.list_input(
-            "Choose ciphertext source",
-            choices=[
-                "Manual Input",
-                "File"
-            ]
-        )
-
-        if ciphertext_source == "Manual Input":
-            ciphertext_string = inquirer.text(message="ciphertext")
-
-            return ciphertext_string
-
-        elif ciphertext_source == "File":
-            question = [
-                inquirer.Path("file_path",
-                                message="path to ciphertext file",
-                                path_type=inquirer.Path.FILE,
-                                ),
-            ]
-
-            ciphertext_file_path = inquirer.prompt(question)
-
-            return hf.read_file_as_string_single_stripped(ciphertext_file_path['file_path'])
-
-        else:
-            raise NotImplementedError
-
-def playfair_cipher_plaintext_write_prompt(plaintext: str):
-    # Ask for plaintext destination
-    destination = inquirer.list_input(
-        "Choose result destination",
-        choices=[
-            "Terminal Output",
-            "File"
-        ]
-    )
-
-    if destination == "Terminal Output":
-        print(plaintext)
-
-    elif destination == "File":
-        question = [
-            inquirer.Path("file_path",
-                            message="path to plaintext file",
-                            path_type=inquirer.Path.FILE,
-                            ),
-        ]
-
-        plaintext_file_path = inquirer.prompt(question)
-
-        hf.write_file_from_string(plaintext, plaintext_file_path['file_path'])
-
-    else:
-        raise NotImplementedError
-
 def hillCipher_cipher_run(mode: str):
     key = hillCipher_cipher_get_key()
 
     cipher = HillCipher(key)
 
     if mode == "Encrypt":
-        plaintext = hillCipher_cipher_plaintext_read_prompt()
+        plaintext = plaintext_read_prompt()
 
         ciphertext = cipher.encrypt(plaintext)
 
-        hillCipher_cipher_ciphertext_write_prompt(ciphertext)
+        ciphertext_write_prompt(ciphertext)
 
     elif mode == "Decrypt":
-        ciphertext = hillCipher_cipher_ciphertext_read_prompt()
+        ciphertext = ciphertext_read_prompt()
 
         plaintext = cipher.decrypt(ciphertext)
 
-        hillCipher_cipher_plaintext_write_prompt(plaintext)
+        plaintext_write_prompt(plaintext)
 
 def hillCipher_cipher_get_key() -> str:
     # Set up cipher key
@@ -348,7 +217,7 @@ def hillCipher_cipher_get_key() -> str:
     else:
         raise NotImplementedError
 
-def hillCipher_cipher_plaintext_read_prompt() -> str:
+def plaintext_read_prompt() -> str:
         # Ask for plaintext source
         plaintext_source = inquirer.list_input(
             "Choose plaintext source",
@@ -378,7 +247,7 @@ def hillCipher_cipher_plaintext_read_prompt() -> str:
         else:
             raise NotImplementedError
 
-def hillCipher_cipher_ciphertext_write_prompt(ciphertext: str):
+def ciphertext_write_prompt(ciphertext: str):
     # Ask for ciphertext destination
     destination = inquirer.list_input(
         "Choose result destination",
@@ -421,7 +290,7 @@ def hillCipher_cipher_ciphertext_write_prompt(ciphertext: str):
     else:
         raise NotImplementedError
 
-def hillCipher_cipher_ciphertext_read_prompt() -> str:
+def ciphertext_read_prompt() -> str:
         # Ask for ciphertext source
         ciphertext_source = inquirer.list_input(
             "Choose ciphertext source",
@@ -451,7 +320,7 @@ def hillCipher_cipher_ciphertext_read_prompt() -> str:
         else:
             raise NotImplementedError
 
-def hillCipher_cipher_plaintext_write_prompt(plaintext: str):
+def plaintext_write_prompt(plaintext: str):
     # Ask for plaintext destination
     destination = inquirer.list_input(
         "Choose result destination",
