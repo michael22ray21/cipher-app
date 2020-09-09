@@ -1,6 +1,6 @@
 import CipherInterface
 
-BYTE_MAX = 255
+BYTE_MAX = 256
 
 class ExtendedVignereCipher(CipherInterface.BinaryCipher):
     """Extended Vignere cipher description here"""
